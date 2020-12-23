@@ -30,7 +30,9 @@ export default function Register() {
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
 					autoFocus
+					placeholder="Your email"
 				/>
+				<br />
 				<button type="submit" className="btn btn-raised">
 					Register now!
 				</button>

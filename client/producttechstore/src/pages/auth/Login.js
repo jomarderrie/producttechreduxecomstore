@@ -77,6 +77,7 @@ export default function Login({ history }) {
 				const { user } = result;
 				const idTokenResult = await user.getIdTokenResult();
 				dispatch(loggedInUser({ email: user.email, token: idTokenResult.token }));
+				history.push('/');
 			})
 			.catch((err) => {
 				console.log(err);

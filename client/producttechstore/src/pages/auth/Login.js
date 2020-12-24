@@ -1,18 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { auth, googleAuthProvider } from '../../firebase';
 import { toast } from 'react-toastify';
 import { Button } from 'antd';
 import { MailOutlined, GoogleOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { loggedInUser } from '../../redux/userReducer/userTypes';
+import axios from 'axios';
+
+const createOrUpdateUser = async (authtoken) => {
+	return await axios.post(
+		`${process.env.REACT_APP_API}/create-or-update-user`,
+		{},
+		{
+			headers: {
+				authtoken
+			}
+		}
+	);
+};
 
 export default function Login({ history }) {
-	const [ email, setEmail ] = useState('dog@gmail.com');
-	const [ password, setPassword ] = useState('doggah123');
-	const [ loading, setLoading ] = useState(false);
-	const dispatch = useDispatch();
+	const [ email, setEmail ] = useState('nathangemieee@gmail.com');
 
+	const [ password, setPassword ] = useState('dog123');
+	const [ loading, setLoading ] = useState(false);
+	const { user } = useSelector((state) => ({ ...state }));
+	const dispatch = useDispatch();
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setLoading(true);
@@ -21,8 +35,25 @@ export default function Login({ history }) {
 			// console.log(result);
 			const { user } = result;
 			const idTokenResult = await user.getIdTokenResult();
+
+			createOrUpdateUser(idTokenResult.token)
+				.then((res) =>
+					dispatch(
+						loggedInUser({
+							name: res.data.name,
+							email: res.data.email,
+							token: idTokenResult.token,
+							role: res.data.role,
+							_id: res.data._id
+						})
+					)
+				)
+				.catch((err) => {
+					console.log(err);
+					toast.error(err.message);
+				});
+
 			setLoading(false);
-			dispatch(loggedInUser({ email: user.email, token: idTokenResult.token }));
 			history.push('/');
 		} catch (err) {
 			console.log(err);
@@ -31,6 +62,12 @@ export default function Login({ history }) {
 		}
 	};
 
+	useEffect(
+		() => {
+			if (user && user.token) history.push('/');
+		},
+		[ user, history ]
+	);
 	const loginForm = () => (
 		<form onSubmit={handleSubmit}>
 			<div className="form-group">
@@ -76,7 +113,17 @@ export default function Login({ history }) {
 			.then(async (result) => {
 				const { user } = result;
 				const idTokenResult = await user.getIdTokenResult();
-				dispatch(loggedInUser({ email: user.email, token: idTokenResult.token }));
+				createOrUpdateUser(idTokenResult.token).then((res) =>
+					dispatch(
+						loggedInUser({
+							name: res.data.name,
+							email: res.data.email,
+							token: idTokenResult.token,
+							role: res.data.role,
+							_id: res.data._id
+						})
+					)
+				);
 				history.push('/');
 			})
 			.catch((err) => {

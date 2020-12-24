@@ -1,24 +1,65 @@
 import React, { useState, useEffect } from 'react';
 import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
-
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { loggedInUser } from '../../redux/userReducer/userTypes';
+const createOrUpdateUser = async (authtoken) => {
+	return await axios.post(
+		`${process.env.REACT_APP_API}/create-or-update-user`,
+		{},
+		{
+			headers: {
+				authtoken
+			}
+		}
+	);
+};
 export default function RegisterComplete({ history }) {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
+	const dispatch = useDispatch();
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		if (!email || !password) {
+			toast.error('Email and password is required');
+			return;
+		}
+
+		if (password.length < 6) {
+			toast.error('Password must be at least 6 characters long');
+			return;
+		}
 
 		try {
 			const result = await auth.signInWithEmailLink(email, window.location.href);
 
 			if (result.user.emailVerified) {
 				window.localStorage.removeItem('emailForRegistration');
-
+				console.log(auth.currentUser);
 				let user = auth.currentUser;
 				await user.updatePassword(password);
 				const idTokenResult = await user.getIdTokenResult();
 
 				console.log(idTokenResult);
+
+				createOrUpdateUser(idTokenResult.token)
+					.then((res) =>
+						dispatch(
+							loggedInUser({
+								name: res.data.name,
+								email: res.data.email,
+								token: idTokenResult.token,
+								role: res.data.role,
+								_id: res.data._id
+							})
+						)
+					)
+					.catch((err) => {
+						console.log(err);
+						toast.error(err.message);
+					});
+
 				history.push('/');
 			}
 			console.log(result);

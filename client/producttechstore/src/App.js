@@ -24,6 +24,7 @@ function App() {
 				dispatch(loggedInUser({ email: user.email, token: idTokenResult.token }));
 			}
 		});
+		return () => unSubscribe();
 	});
 
 	return (

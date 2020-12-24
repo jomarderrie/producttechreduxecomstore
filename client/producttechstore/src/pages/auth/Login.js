@@ -6,19 +6,7 @@ import { MailOutlined, GoogleOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { loggedInUser } from '../../redux/userReducer/userTypes';
-import axios from 'axios';
-
-const createOrUpdateUser = async (authtoken) => {
-	return await axios.post(
-		`${process.env.REACT_APP_API}/create-or-update-user`,
-		{},
-		{
-			headers: {
-				authtoken
-			}
-		}
-	);
-};
+import { createOrUpdateUser } from '../../helpers/auth';
 
 export default function Login({ history }) {
 	const [ email, setEmail ] = useState('nathangemieee@gmail.com');
@@ -37,7 +25,7 @@ export default function Login({ history }) {
 			const idTokenResult = await user.getIdTokenResult();
 
 			createOrUpdateUser(idTokenResult.token)
-				.then((res) =>
+				.then((res) => {
 					dispatch(
 						loggedInUser({
 							name: res.data.name,
@@ -46,19 +34,34 @@ export default function Login({ history }) {
 							role: res.data.role,
 							_id: res.data._id
 						})
-					)
-				)
+					);
+					roleBasedRedirect(res);
+				})
 				.catch((err) => {
 					console.log(err);
 					toast.error(err.message);
 				});
 
 			setLoading(false);
-			history.push('/');
+			// history.push('/');
 		} catch (err) {
 			console.log(err);
 			toast.error(err.message);
 			setLoading(false);
+		}
+	};
+
+	const roleBasedRedirect = (res) => {
+		// check if intended
+		let intended = history.location.state;
+		if (intended) {
+			history.push(intended.from);
+		} else {
+			if (res.data.role === 'admin') {
+				history.push('/admin/dashboard');
+			} else {
+				history.push('/user/history');
+			}
 		}
 	};
 
@@ -68,6 +71,7 @@ export default function Login({ history }) {
 		},
 		[ user, history ]
 	);
+
 	const loginForm = () => (
 		<form onSubmit={handleSubmit}>
 			<div className="form-group">
@@ -110,8 +114,8 @@ export default function Login({ history }) {
 	const googleLogin = async () => {
 		auth
 			.signInWithPopup(googleAuthProvider)
-			.then(async (result) => {
-				const { user } = result;
+			.then(async (res) => {
+				const { user } = res;
 				const idTokenResult = await user.getIdTokenResult();
 				createOrUpdateUser(idTokenResult.token).then((res) =>
 					dispatch(
@@ -124,7 +128,7 @@ export default function Login({ history }) {
 						})
 					)
 				);
-				history.push('/');
+				roleBasedRedirect(res);
 			})
 			.catch((err) => {
 				console.log(err);

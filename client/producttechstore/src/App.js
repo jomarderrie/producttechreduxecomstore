@@ -24,6 +24,7 @@ import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
 import { currentUser } from './helpers/auth';
 import { loggedInUser } from './redux/userReducer/userTypes';
+import ProductCreate from './pages/admin/product/ProductCreate';
 
 function App() {
 	const dispatch = useDispatch();
@@ -71,6 +72,8 @@ function App() {
 				<UserRoute exact path="/user/wishlist" component={WishList} />
 				<AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
 				<AdminRoute exact path="/admin/category" component={CategoryCreate} />
+				<AdminRoute exact path="/admin/product" component={ProductCreate} />
+				<AdminRoute exact path="/admin/sub" component={SubCreate} />
 				<AdminRoute exact path="/admin/sub" component={SubCreate} />
 				<AdminRoute exact path="/admin/sub/:slug" component={SubUpdate} />
 				<AdminRoute exact path="/admin/category/:slug" component={CategoryUpdate} />

@@ -3424,6 +3424,11 @@
   "resolved" "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz"
   "version" "3.0.0"
 
+"bytechunker@~1.0.1":
+  "integrity" "sha1-Ogr61zJIORvyuF/QU939kwDBC/A="
+  "resolved" "https://registry.npmjs.org/bytechunker/-/bytechunker-1.0.1.tgz"
+  "version" "1.0.1"
+
 "bytes@3.0.0":
   "integrity" "sha1-0ygVQE1olpn4Wk6k+odV3ROpYEg="
   "resolved" "https://registry.yarnpkg.com/bytes/-/bytes-3.0.0.tgz"
@@ -10266,6 +10271,11 @@
   "resolved" "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.8.tgz"
   "version" "6.0.8"
 
+"react-image-file-resizer@^0.3.9":
+  "integrity" "sha512-uq9Df/A/GCRYrVGZwbtrJu7HErP2noYcZDc4b7TQmB/YBzkXJ/AEfQKByEhcr/R8GZl2xN4uCLAgavaRYQiXWg=="
+  "resolved" "https://registry.npmjs.org/react-image-file-resizer/-/react-image-file-resizer-0.3.9.tgz"
+  "version" "0.3.9"
+
 "react-is@^16.12.0", "react-is@^16.13.1", "react-is@^16.6.0", "react-is@^16.7.0", "react-is@^16.8.1":
   "integrity" "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
   "resolved" "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz"
@@ -10711,6 +10721,13 @@
   "integrity" "sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg=="
   "resolved" "https://registry.npmjs.org/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz"
   "version" "1.5.1"
+
+"resizer@^0.0.6":
+  "integrity" "sha1-zwfQvaRSOseR7zzW9Gyi8hvF7wI="
+  "resolved" "https://registry.npmjs.org/resizer/-/resizer-0.0.6.tgz"
+  "version" "0.0.6"
+  dependencies:
+    "bytechunker" "~1.0.1"
 
 "resolve-cwd@^2.0.0":
   "integrity" "sha1-AKn3OHVW4nA46uIyyqNypqWbZlo="

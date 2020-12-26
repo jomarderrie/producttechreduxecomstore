@@ -10,6 +10,10 @@ import Home from './pages/Home';
 import Header from './components/nav/Header';
 import Password from './pages/user/Password';
 import WishList from './pages/user/Wishlist';
+import CategoryCreate from './pages/admin/category/CategoryCreate';
+import CategoryUpdate from './pages/admin/category/CategoryUpdate';
+import SubCreate from './pages/sub/SubCreate';
+import SubUpdate from './pages/sub/SubUpdate';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import RegisterComplete from './pages/auth/RegisterComplete';
 import ForgotPassword from './pages/auth/ForgotPassword';
@@ -20,6 +24,7 @@ import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
 import { currentUser } from './helpers/auth';
 import { loggedInUser } from './redux/userReducer/userTypes';
+
 function App() {
 	const dispatch = useDispatch();
 
@@ -65,6 +70,10 @@ function App() {
 				<UserRoute exact path="/user/password" component={Password} />
 				<UserRoute exact path="/user/wishlist" component={WishList} />
 				<AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
+				<AdminRoute exact path="/admin/category" component={CategoryCreate} />
+				<AdminRoute exact path="/admin/sub" component={SubCreate} />
+				<AdminRoute exact path="/admin/sub/:slug" component={SubUpdate} />
+				<AdminRoute exact path="/admin/category/:slug" component={CategoryUpdate} />
 			</Switch>
 		</div>
 	);

@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import {Button} from "antd";
+import {MailOutlined} from "@ant-design/icons";
 
 const Register = ({ history }) => {
   const [email, setEmail] = useState("");
-
+  const [password, setPassword] = useState('');
+  const [loading,setLoading] = useState(false)
   const { user } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
@@ -31,21 +34,42 @@ const Register = ({ history }) => {
   };
 
   const registerForm = () => (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="email"
-        className="form-control"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Your email"
-        autoFocus
-      />
+      <form onSubmit={handleSubmit}>
+          <div className="form-group">
+              <input
+                  type="email"
+                  className="form-control"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Your email"
+                  autoFocus
+              />
+          </div>
 
-      <br />
-      <button type="submit" className="btn btn-raised">
-        Register
-      </button>
-    </form>
+          <div className="form-group">
+              <input
+                  type="password"
+                  className="form-control"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Your password"
+              />
+          </div>
+
+          <br />
+          <Button
+              onClick={handleSubmit}
+              type="primary"
+              className="mb-3"
+              block
+              shape="round"
+              icon={<MailOutlined />}
+              size="large"
+              disabled={!email || password.length < 6}
+          >
+              Login with Email/Password
+          </Button>
+      </form>
   );
 
   return (

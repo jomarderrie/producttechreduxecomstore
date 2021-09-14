@@ -47,11 +47,9 @@ const Payment = lazy(() => import("./pages/Payment"));
 
 const App = () => {
   const dispatch = useDispatch();
-
   // to check firebase auth state
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      console.log(process.env.REACT_APP_API)
       if (user) {
         const idTokenResult = await user.getIdTokenResult();
         // console.log("user", user);

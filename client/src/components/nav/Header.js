@@ -80,13 +80,7 @@ const Header = () => {
                         <Link to="/login">Login</Link>
                     </Item>
                 )}
-                <Item key="cart" className="float-right" style={{float: 'right'}} icon={<ShoppingCartOutlined/>}>
-                    <Link to="/cart">
-                        <Badge count={cart.length} offset={[9, 0]}>
-                            Cart
-                        </Badge>
-                    </Link>
-                </Item>
+
                 {user && (
                     <SubMenu
                         icon={<SettingOutlined/>}
@@ -110,6 +104,13 @@ const Header = () => {
                         </Item>
                     </SubMenu>
                 )}
+                <Item key="cart" className="float-right" style={{float: 'right'}} icon={<ShoppingCartOutlined/>}>
+                    <Link to="/cart">
+                        <Badge count={cart.length} offset={[9, 0]}>
+                            Cart
+                        </Badge>
+                    </Link>
+                </Item>
             </Group>
 
 

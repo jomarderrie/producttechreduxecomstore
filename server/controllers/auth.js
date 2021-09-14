@@ -1,4 +1,7 @@
 const User = require("../models/user");
+const jwt = require("express-jwt");
+const jsonwebtoken = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 exports.createOrUpdateUser = async (req, res) => {
     const {name, picture, email} = req.user;
@@ -26,59 +29,63 @@ exports.currentUser = async (req, res) => {
     });
 };
 
+
+
 exports.createUser = async (req, res) => {
-    let passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/
     let emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
     let errors = []
     let password = req.body.password;
     let email = req.body.email;
 
-    if (passwordRegex.exec(password) == null) {
+    if (password.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,})$/) == null) {
         errors.push("Password is incorrect");
     }
     if (emailRegex.exec(email) == null) {
         errors.push("Email is incorrect");
     }
-    if (!errors.isEmpty()) {
-        return res.status(400).json({errors: errors.array()});
+    if (!errors.length===0) {
+        return res.status(400).json({errors: errors});
     }
     try {
         let user = await User.findOne({email});
-        if (!user) {
+        if (user) {
             return res
                 .status(400)
-                .json({errors: [{msg: 'Invalid Credentials'}]});
+                .json({ errors: [{ msg: 'User already exists' }] });
         }
 
-        const isMatch = await bcrypt.compar(password, password);
-        if (!isMatch) {
-            return res
-                .status(400)
-                .json({errors: [{msg: 'Invalid Credentials'}]});
-        }
+        user = new User({email, password, name: email.split("@")[0]})
 
+        const salt = await bcrypt.genSalt(10);
+
+        user.password = await bcrypt.hash(password, salt);
+
+        let userResp;
         const payload = {
             user: {
-                id: user.id
+                id: user.id,
+                email:user.email
             }
         };
+        console.log("USER CREATED", user);
 
-        // const newUser = await new User({
-        //     email,
-        //     name: email.split("@")[0],
-        //     picture,
-        // }).save();
-        // console.log("USER CREATED", newUser);
-        // res.json(newUser);
+        jsonwebtoken.sign(
+            payload,process.env.JWT_SECRET,{expiresIn:'5 days'}, (err,token) =>{
+                if (err) throw err;
+                userResp = {
+                    name: user.name,
+                    email: user.email,
+                    token,
+                    role: user.role,
+                    _id: user._id,
+                };
+                res.json({userResp});
+            }
+        )
+
 
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server error');
     }
-    console.log(req.body)
-    console.log(passwordRegex.exec(req.body.password));
-    ;
-    console.log(emailRegex.exec(req.body.email))
-    res.json("good")
-
 }

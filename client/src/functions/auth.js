@@ -41,3 +41,7 @@ export const currentAdmin = async (authtoken) => {
     }
   );
 };
+
+export const login = async (email, password) =>{
+    return await axios.post(`${process.env.REACT_APP_API}/login`,{email,password})
+}

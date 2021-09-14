@@ -29,6 +29,61 @@ exports.currentUser = async (req, res) => {
     });
 };
 
+exports.login = async (req, res) => {
+    let emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    let errors = []
+    let password = req.body.password;
+    let email = req.body.email;
+
+    if (password.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,})$/) == null) {
+        errors.push("Password is incorrect");
+    }
+    if (emailRegex.exec(email) == null) {
+        errors.push("Email is incorrect");
+    }
+    if (!errors.length === 0) {
+        return res.status(400).json({errors: errors});
+    }
+    try {
+        let user = await User.findOne({email});
+        if (!user) {
+            return res
+                .status(400)
+                .json({errors: [{msg: 'Invalid Credentials'}]});
+        }
+        const isMatch = await bcrypt.compare(password, user.password);
+
+
+        if (!isMatch) {
+            return res
+                .status(400)
+                .json({errors: [{msg: 'Invalid Credentials'}]});
+        }
+        console.log("USER logged in", user);
+        const payload = {
+            user: {
+                id: user.id,
+                email: user.email
+            }
+        };
+        jsonwebtoken.sign(
+            payload, process.env.JWT_SECRET, {expiresIn: '5 days'}, (err, token) => {
+                if (err) throw err;
+                let userResp = {
+                    name: user.name,
+                    email: user.email,
+                    token,
+                    role: user.role,
+                    _id: user._id,
+                };
+                res.json({userResp});
+            }
+        )
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+}
 
 
 exports.createUser = async (req, res) => {
@@ -43,7 +98,7 @@ exports.createUser = async (req, res) => {
     if (emailRegex.exec(email) == null) {
         errors.push("Email is incorrect");
     }
-    if (!errors.length===0) {
+    if (!errors.length === 0) {
         return res.status(400).json({errors: errors});
     }
     try {
@@ -51,7 +106,7 @@ exports.createUser = async (req, res) => {
         if (user) {
             return res
                 .status(400)
-                .json({ errors: [{ msg: 'User already exists' }] });
+                .json({errors: [{msg: 'User already exists'}]});
         }
 
         user = new User({email, password, name: email.split("@")[0]})
@@ -64,13 +119,13 @@ exports.createUser = async (req, res) => {
         const payload = {
             user: {
                 id: user.id,
-                email:user.email
+                email: user.email
             }
         };
         console.log("USER CREATED", user);
 
         jsonwebtoken.sign(
-            payload,process.env.JWT_SECRET,{expiresIn:'5 days'}, (err,token) =>{
+            payload, process.env.JWT_SECRET, {expiresIn: '5 days'}, (err, token) => {
                 if (err) throw err;
                 userResp = {
                     name: user.name,

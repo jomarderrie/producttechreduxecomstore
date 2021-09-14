@@ -5,7 +5,7 @@ import { Button } from "antd";
 import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { createOrUpdateUser } from "../../functions/auth";
+import {createOrUpdateUser, login} from "../../functions/auth";
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("gqlreactnode@gmail.com");
@@ -44,30 +44,26 @@ const Login = ({ history }) => {
     setLoading(true);
     // console.table(email, password);
     try {
+        await login(email, password).then((res) =>{
+        dispatch({
+          type: "LOGGED_IN_USER",
+          payload: {
+            name: res.data.userResp.name,
+            email: res.data.userResp.email,
+            token: res.data.userResp.token,
+            role: res.data.userResp.role,
+            _id: res.data.userResp._id,
+          },
+        })
+        roleBasedRedirect(res);
+      });
 
-      // const result = await auth.signInWithEmailAndPassword(email, password);
-      // console.log(result);
-      // const { user } = result;
-      // const idTokenResult = await user.getIdTokenResult();
+      toast.success(
+          `Successfully login`
+      );
 
 
-      // createOrUpdateUser(idTokenResult.token)
-      //   .then((res) => {
-      //     dispatch({
-      //       type: "LOGGED_IN_USER",
-      //       payload: {
-      //         name: res.data.name,
-      //         email: res.data.email,
-      //         token: idTokenResult.token,
-      //         role: res.data.role,
-      //         _id: res.data._id,
-      //       },
-      //     });
-      //     roleBasedRedirect(res);
-      //   })
-      //   .catch((err) => console.log(err));
-
-      // history.push("/");
+      history.push("/");
     } catch (error) {
       console.log(error);
       toast.error(error.message);

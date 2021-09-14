@@ -20,10 +20,9 @@ const Register = ({history}) => {
         e.preventDefault();
         setLoading(true);
         try {
-            const result = await createUser(email, password).then((res) => {
+             await createUser(email, password).then((res) => {
                 // localStorage.setItem("JWT", JSON.stringify(res.data.token));
                 console.log(res)
-
                 dispatch({
                     type: "LOGGED_IN_USER",
                     payload: {
@@ -42,7 +41,6 @@ const Register = ({history}) => {
             })
 
 
-            console.log(result)
 
         } catch (error) {
             console.log(error);

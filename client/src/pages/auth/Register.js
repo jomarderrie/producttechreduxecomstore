@@ -7,8 +7,8 @@ import {MailOutlined} from "@ant-design/icons";
 import {createUser} from "../../functions/auth";
 
 const Register = ({history}) => {
-    const [email, setEmail] = useState("deeznutsgottem403@gmail.com");
-    const [password, setPassword] = useState('HabboJ1k2123');
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false)
     const {user} = useSelector((state) => ({...state}));
 
@@ -87,7 +87,7 @@ const Register = ({history}) => {
                 size="large"
                 disabled={!email || password.length < 6}
             >
-                Login with Email/Password
+                Register with Email/Password
             </Button>
         </form>
     );

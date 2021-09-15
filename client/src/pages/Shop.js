@@ -19,9 +19,12 @@ const {SubMenu, ItemGroup} = Menu;
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
+    const [sortedProducts, setSortedProducts] = useState([])
     const [loading, setLoading] = useState(false);
     const [price, setPrice] = useState([0, 0]);
     const [ok, setOk] = useState(false);
+
+
     const [categories, setCategories] = useState([]);
     const [categoryIds, setCategoryIds] = useState([]);
     const [star, setStar] = useState("");
@@ -43,7 +46,7 @@ const Shop = () => {
         "Blue",
     ]);
     const [color, setColor] = useState("");
-    const [shipping, setShipping] = useState("");
+    const [shipping, setShipping] = useState(false);
 
     let dispatch = useDispatch();
     let {search} = useSelector((state) => ({...state}));
@@ -55,6 +58,7 @@ const Shop = () => {
         getCategories().then((res) => setCategories(res.data));
         // fetch subcategories
         getSubs().then((res) => setSubs(res.data));
+
 
     }, []);
 
@@ -68,6 +72,7 @@ const Shop = () => {
     const loadAllProducts = () => {
         getProductsByCount(12).then((p) => {
             setProducts(p.data);
+            setSortedProducts(p.data)
             setLoading(false);
         });
     };
@@ -108,6 +113,29 @@ const Shop = () => {
             setOk(!ok);
         }, 300);
     };
+
+
+    const handleChange = (event) => {
+        let tempProducts = [...products];
+        if (shipping) {
+            tempProducts = tempProducts.filter((item) => {
+                return item.shipping === "Yes";
+            })
+        }
+        console.log(tempProducts)
+        // price
+        // categories
+        // categoryIds
+        // star
+        // subs
+        // sub
+        // brands
+        // brand
+        // colors
+        // color
+        // shipping
+        setSortedProducts(tempProducts)
+    }
 
 
     // 4. load products based on category
@@ -275,42 +303,29 @@ const Shop = () => {
         fetchProducts({color: e.target.value});
     };
 
+
     // 9. show products based on shipping yes/no
     const showShipping = () => (
         <>
             <Checkbox
                 className="pb-2 pl-4 pr-4"
-                onChange={handleShippingchange}
-                value="Yes"
-                checked={shipping === "Yes"}
+                onChange={handleShippingChange}
+                checked={shipping}
             >
                 Yes
             </Checkbox>
 
-            <Checkbox
-                className="pb-2 pl-4 pr-4"
-                onChange={handleShippingchange}
-                value="No"
-                checked={shipping === "No"}
-            >
-                No
-            </Checkbox>
         </>
     );
 
-    const handleShippingchange = (e) => {
-        setSub("");
-        dispatch({
-            type: "SEARCH_QUERY",
-            payload: {text: ""},
-        });
-        setPrice([0, 0]);
-        setCategoryIds([]);
-        setStar("");
-        setBrand("");
-        setColor("");
-        setShipping(e.target.value);
-        fetchProducts({shipping: e.target.value});
+    const handleShippingChange = ({target}) => {
+        if (shipping){
+            setShipping(false)
+        }else{
+            setShipping(true);
+        }
+
+        handleChange();
     };
 
     return (
@@ -434,10 +449,10 @@ const Shop = () => {
                         <h4 className="text-danger">Products</h4>
                     )}
 
-                    {products.length < 1 && <p>No products found</p>}
+                    {sortedProducts.length < 1 && <p>No products found</p>}
 
                     <div className="row pb-5">
-                        {products.map((p) => (
+                        {sortedProducts.map((p) => (
                             <div key={p._id} className="col-md-4 mt-3">
                                 <ProductCard product={p}/>
                             </div>

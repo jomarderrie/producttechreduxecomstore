@@ -76,7 +76,7 @@ const ProductCreate = () => {
     // console.log(e.target.name, " ----- ", e.target.value);
   };
 
-  const handleCatagoryChange = (e) => {
+  const handleCategoryChange = (e) => {
     e.preventDefault();
     console.log("CLICKED CATEGORY", e.target.value);
     setValues({ ...values, subs: [], category: e.target.value });
@@ -117,7 +117,7 @@ const ProductCreate = () => {
             handleChange={handleChange}
             setValues={setValues}
             values={values}
-            handleCatagoryChange={handleCatagoryChange}
+            handleCatagoryChange={handleCategoryChange}
             subOptions={subOptions}
             showSub={showSub}
           />

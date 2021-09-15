@@ -150,17 +150,17 @@ const Login = ({ history }) => {
           )}
           {loginForm()}
 
-          <Button
-            onClick={googleLogin}
-            type="danger"
-            className="mb-3"
-            block
-            shape="round"
-            icon={<GoogleOutlined />}
-            size="large"
-          >
-            Login with Google
-          </Button>
+          {/*<Button*/}
+          {/*  onClick={googleLogin}*/}
+          {/*  type="danger"*/}
+          {/*  className="mb-3"*/}
+          {/*  block*/}
+          {/*  shape="round"*/}
+          {/*  icon={<GoogleOutlined />}*/}
+          {/*  size="large"*/}
+          {/*>*/}
+          {/*  Login with Google*/}
+          {/*</Button>*/}
 
           <Link to="/forgot/password" className="float-right text-danger">
             Forgot Password

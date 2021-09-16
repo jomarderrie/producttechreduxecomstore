@@ -45,6 +45,8 @@ const Login = ({ history }) => {
     // console.table(email, password);
     try {
         await login(email, password).then((res) =>{
+          localStorage.setItem("token", JSON.stringify(res.data.userResp.token));
+
         dispatch({
           type: "LOGGED_IN_USER",
           payload: {

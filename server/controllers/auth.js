@@ -23,6 +23,7 @@ exports.createOrUpdateUser = async (req, res) => {
 
 
 exports.currentUser = async (req, res) => {
+    console.log(req)
     User.findOne({email: req.user.email}).exec((err, user) => {
         if (err) throw new Error(err);
         res.json(user);
@@ -85,6 +86,10 @@ exports.login = async (req, res) => {
     }
 }
 
+exports.authenticateToken = async (req,res) =>{
+    const authHeader = req.headers['authorization'];
+    console.log(authHeader);
+}
 
 exports.createUser = async (req, res) => {
     let emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
@@ -147,3 +152,4 @@ exports.createUser = async (req, res) => {
         res.status(500).send('Server error');
     }
 }
+

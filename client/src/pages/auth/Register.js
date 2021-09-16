@@ -21,7 +21,7 @@ const Register = ({history}) => {
         setLoading(true);
         try {
              await createUser(email, password).then((res) => {
-                // localStorage.setItem("JWT", JSON.stringify(res.data.token));
+                localStorage.setItem("token", JSON.stringify(res.data.userResp.token));
                 console.log(res)
                 dispatch({
                     type: "LOGGED_IN_USER",

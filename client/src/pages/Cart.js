@@ -15,9 +15,10 @@ const Cart = ({ history }) => {
   };
 
   const saveOrderToDb = () => {
-    // console.log("cart", JSON.stringify(cart, null, 4));
+    console.log(user.token, cart)
     userCart(cart, user.token)
       .then((res) => {
+        console.log(res)
         console.log("CART POST RES", res);
         if (res.data.ok) history.push("/checkout");
       })

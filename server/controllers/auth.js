@@ -89,9 +89,9 @@ exports.login = async (req, res) => {
     }
 }
 
-exports.authenticateToken = async (req,res) =>{
+exports.authenticateToken = async (req, res) => {
     let userResp;
-    User.findOne({email:req.user.email}).exec((err, user) =>{
+    User.findOne({email: req.user.email}).exec((err, user) => {
         if (err) throw new Error(err);
         userResp = {
             name: user.name,

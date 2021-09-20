@@ -27,12 +27,10 @@ exports.authenticateTokenJwtUser = (req,res,next) =>{
           ' login again' });
   }
   realJwt.verify(authHeader, process.env.JWT_SECRET, (err, user) => {
-    console.log("got hit")
     if (err) {
       return res.status(401).json({ error: 'Invalid' +
             ' json token' });
     }
-    console.log(user, "user from jwt")
     req.user = user.user;
     next();
   });

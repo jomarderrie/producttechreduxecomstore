@@ -48,9 +48,11 @@ export const login = async (email, password) => {
 
 export const getCurrentUser = async (authToken) => {
     return await axios.post(`${process.env.REACT_APP_API}/jwt-user`,
-        {}, {headers:{
+        {}, {
+        headers:{
             authorization: authToken
-            }})
+            }
+    })
     //     .then((res) =>{
     //     console.log(res)
     // })

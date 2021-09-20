@@ -4,6 +4,8 @@ const Cart = require("../models/cart");
 const Coupon = require("../models/coupon");
 const Order = require("../models/order");
 const uniqueid = require("uniqueid");
+const mongoose = require('mongoose');
+
 
 exports.userCart = async (req, res) => {
   // console.log(req.body); // {cart: []}
@@ -23,20 +25,20 @@ exports.userCart = async (req, res) => {
 
   for (let i = 0; i < cart.length; i++) {
     let object = {};
-
+  object.title = cart[i].title;
     object.product = cart[i]._id;
     object.count = cart[i].count;
     object.color = cart[i].color;
     // get price for creating total
-    let productFromDb = await Product.findById(cart[i]._id)
-      .select("price")
-      .exec();
-    object.price = productFromDb.price;
+    let productFromDb = await Product.findOne({title:cart[i].title}).select("price").exec();
+        // .select("price")
+        // .exec();
+    object.price = productFromDb.price ;
 
     products.push(object);
   }
 
-  // console.log('products', products)
+  console.log('products', products)
 
   let cartTotal = 0;
   for (let i = 0; i < products.length; i++) {
@@ -63,6 +65,7 @@ exports.getUserCart = async (req, res) => {
     .exec();
 
   const { products, cartTotal, totalAfterDiscount } = cart;
+  console.log(cart)
   res.json({ products, cartTotal, totalAfterDiscount });
 };
 

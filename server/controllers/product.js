@@ -150,22 +150,28 @@ exports.productStar = async (req, res) => {
 };
 
 exports.listRelated = async (req, res) => {
-  const product = await Product.findById(req.params.productId).exec();
+  console.log(req)
+  // const product = await Product.findById(req.params.productId).exec();
+  let productFromDb = await Product.findOne({title:req.params.productId}).exec();
+  console.log(productFromDb)
+
+  let id =  await Product.findById(productFromDb._id).exec();
+
 
   const related = await Product.find({
-    _id: { $ne: product._id },
-    category: product.category,
+    _id: { $ne: productFromDb._id },
+    category: productFromDb.category,
   })
     .limit(3)
     .populate("category")
     .populate("subs")
     .populate("postedBy")
     .exec();
-
+  console.log(related)
   res.json(related);
 };
 
-// SERACH / FILTER
+// search / FILTER
 
 const handleQuery = async (req, res, query) => {
   const products = await Product.find({ $text: { $search: query } })

@@ -180,9 +180,10 @@ exports.addToWishlist = async (req, res) => {
 exports.wishlist = async (req, res) => {
   const list = await User.findOne({ email: req.user.email })
     .select("wishlist")
-    .populate("wishlist")
+    // .populate("wishlist")
     .exec();
-
+  console.log(list)
+  console.log("hey")
   res.json(list);
 };
 

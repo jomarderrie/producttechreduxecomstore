@@ -12,14 +12,14 @@ export const createOrUpdateUser = async (authtoken) => {
     );
 };
 
-export const currentUser = async (authtoken) => {
+export const currentUser = async (authToken) => {
     return await axios.post(
         `${process.env.REACT_APP_API}/current-user`,
         {},
         {
-            headers: {
-                authtoken,
-            },
+            headers:{
+                authorization: authToken
+            }
         }
     );
 };
@@ -30,13 +30,13 @@ export const createUser = async (email, password) => {
     )
 }
 
-export const currentAdmin = async (authtoken) => {
+export const currentAdmin = async (authToken) => {
     return await axios.post(
         `${process.env.REACT_APP_API}/current-admin`,
         {},
         {
-            headers: {
-                authtoken,
+            headers:{
+                authorization: authToken
             },
         }
     );

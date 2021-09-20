@@ -5,8 +5,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 import {auth} from "./firebase";
 import {useDispatch} from "react-redux";
-import {currentUser} from "./functions/auth";
+import {currentUser, getCurrentUser} from "./functions/auth";
 import {LoadingOutlined} from "@ant-design/icons";
+import setAuthToken from "./utils/setAuthToken";
 
 // using lazy
 const Login = lazy(() => import("./pages/auth/Login"));
@@ -67,7 +68,7 @@ const App = () => {
     //             _id: res.data._id,
     //           },
     //         });
-    //       })
+          // })
     //       .catch((err) => console.log(err));
     //   }
     // });
@@ -79,8 +80,23 @@ const App = () => {
     useEffect(() => {
         // console.log("auth token")
         if (localStorage.token) {
-            localStorage.setItem('token', token);
-            currentUser()
+            setAuthToken(localStorage.token);
+            getCurrentUser(localStorage.token).then((res,err) =>{
+                if (res.data){
+                    dispatch({
+                        type: "LOGGED_IN_USER",
+                        payload: {
+                            name: res.data.name,
+                            email: res.data.email,
+                            token: localStorage.token,
+                            role: res.data.role,
+                            _id: res.data._id,
+                        },
+                    });
+                }else{
+                    console.log(err)
+                }
+            })
         } else {
             localStorage.removeItem('token');
         }

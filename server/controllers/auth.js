@@ -31,6 +31,8 @@ exports.currentUser = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
+    console.log(req.body)
+
     let emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
     let errors = []
     let password = req.body.password;
@@ -77,6 +79,7 @@ exports.login = async (req, res) => {
                     role: user.role,
                     _id: user._id,
                 };
+                console.log(userResp)
                 res.json({userResp});
             }
         )
@@ -87,11 +90,24 @@ exports.login = async (req, res) => {
 }
 
 exports.authenticateToken = async (req,res) =>{
-    const authHeader = req.headers['authorization'];
-    console.log(authHeader);
+    let userResp;
+    User.findOne({email:req.user.email}).exec((err, user) =>{
+        if (err) throw new Error(err);
+        userResp = {
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            _id: user._id,
+
+        };
+        res.json(userResp);
+    })
+    // const authHeader = req.headers['authorization'];
+    // console.log(authHeader);
 }
 
 exports.createUser = async (req, res) => {
+    console.log(req.body)
     let emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
     let errors = []
     let password = req.body.password;
@@ -142,6 +158,7 @@ exports.createUser = async (req, res) => {
                     role: user.role,
                     _id: user._id,
                 };
+                console.log(userResp)
                 res.json({userResp});
             }
         )

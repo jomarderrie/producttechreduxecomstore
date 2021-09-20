@@ -1,6 +1,7 @@
 const admin = require("../firebase");
 const User = require("../models/user");
 const jwt = require("express-jwt");
+const realJwt = require("jsonwebtoken");
 
 exports.authCheck = async (req, res, next) => {
   // console.log(req.headers.authtoken); // token
@@ -19,22 +20,20 @@ exports.authCheck = async (req, res, next) => {
   }
 };
 
-exports.authenticateToken = (req,res,next) =>{
+exports.authenticateTokenJwtUser = (req,res,next) =>{
   const authHeader = req.headers['authorization'];
-
-  const token = authHeader && authHeader.split(' ')[1];
-
-  if (token == null) {
+  if (authHeader==null){
     return res.status(401).json({ error: 'Try to' +
           ' login again' });
   }
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+  realJwt.verify(authHeader, process.env.JWT_SECRET, (err, user) => {
+    console.log("got hit")
     if (err) {
       return res.status(401).json({ error: 'Invalid' +
             ' json token' });
     }
-    req.email = user.email;
+    console.log(user, "user from jwt")
+    req.user = user.user;
     next();
   });
 
@@ -54,3 +53,5 @@ exports.adminCheck = async (req, res, next) => {
     next();
   }
 };
+
+

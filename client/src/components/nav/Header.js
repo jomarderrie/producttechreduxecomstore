@@ -33,6 +33,7 @@ const Header = () => {
 
     const logout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('cart');
         dispatch({
             type: "LOGOUT",
             payload: null,

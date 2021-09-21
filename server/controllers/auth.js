@@ -171,10 +171,10 @@ exports.updatePassword = async (req, res) => {
     let email = req.user.email;
     const salt = await bcrypt.genSalt(10);
 
-   let password = await bcrypt.hash(req.password, salt);
+   let password = await bcrypt.hash(req.body.password, salt);
 
     const user = await User.findOneAndUpdate(
-        {email},
+        {email:email},
         {password: password},
         {new: true}
     );

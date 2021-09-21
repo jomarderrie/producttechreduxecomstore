@@ -49,6 +49,7 @@ export const productStar = async (productId, star, authToken) =>
     );
 
 export const getRelated = async (title) =>
+
     await axios.get(`${process.env.REACT_APP_API}/product/related/${title}`);
 
 export const fetchProductsByFilter = async (arg) =>

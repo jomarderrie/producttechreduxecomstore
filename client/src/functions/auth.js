@@ -53,7 +53,13 @@ export const getCurrentUser = async (authToken) => {
             authorization: authToken
             }
     })
-    //     .then((res) =>{
-    //     console.log(res)
-    // })
+}
+
+export const updatePassword = async (authToken, password) =>{
+    return await axios.post(`${process.env.REACT_APP_API}/update-password`,
+        {password}, {
+            headers:{
+                authorization: authToken
+            }
+        })
 }

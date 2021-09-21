@@ -102,12 +102,9 @@ exports.authenticateToken = async (req, res) => {
         };
         res.json(userResp);
     })
-    // const authHeader = req.headers['authorization'];
-    // console.log(authHeader);
 }
 
 exports.createUser = async (req, res) => {
-    console.log(req.body)
     let emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
     let errors = []
     let password = req.body.password;
@@ -170,3 +167,23 @@ exports.createUser = async (req, res) => {
     }
 }
 
+exports.updatePassword = async (req, res) => {
+    let email = req.user.email;
+    const salt = await bcrypt.genSalt(10);
+
+   let password = await bcrypt.hash(req.password, salt);
+
+    const user = await User.findOneAndUpdate(
+        {email},
+        {password: password},
+        {new: true}
+    );
+    if (user) {
+        console.log("USER UPDATED", user);
+        res.json(user);
+    } else {
+        console.error(err.message);
+        res.status(500).send('Server error');
+
+    }
+}

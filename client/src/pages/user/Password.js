@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import UserNav from "../../components/nav/UserNav";
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
+import {updatePassword} from "../../functions/auth";
+import {useSelector} from "react-redux";
 
 const Password = () => {
   const [password, setPassword] = useState("");
@@ -11,7 +13,8 @@ const Password = () => {
     e.preventDefault();
     setLoading(true);
     // console.log(password);
-
+   useSelector((state) => console.log(state));
+    // await updatePassword(){}
     await auth.currentUser
       .updatePassword(password)
       .then(() => {

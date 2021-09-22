@@ -1,3 +1,3 @@
 # producttechreduxecomstore
 
-<img src="https://imgur.com/a/hKyTavV"/>
+![Imgur Image](http://i.imgur.com/zTONrOD.jpg)

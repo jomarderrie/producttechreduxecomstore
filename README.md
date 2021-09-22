@@ -1,19 +1,17 @@
 # producttechreduxecomstore
 
-##features
-
-##technologystack
+## technologystack
 Database: mongo
 frontend: react
 client side storage: redux
 backend: node
 
-##features
+## features
 - jwt login
 - admin dashboard
 - user can shop and make an stripe payment
 
-##admin
+## admin
 admin create product
 ![Imgur Image](https://i.imgur.com/6uvS2UX.png)
 
@@ -28,6 +26,6 @@ add coupon
 
 ![Imgur Image](https://i.imgur.com/mw0klNJ.png)
 
-##user
+## user
 
 

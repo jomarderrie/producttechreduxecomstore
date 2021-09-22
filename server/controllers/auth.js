@@ -120,7 +120,7 @@ exports.createUser = async (req, res) => {
         return res.status(400).json({errors: errors});
     }
     try {
-        let user = await User.findOne({email});
+        let user = await User.findOne({email:email});
         if (user) {
             return res
                 .status(400)
@@ -186,4 +186,8 @@ exports.updatePassword = async (req, res) => {
         res.status(500).send('Server error');
 
     }
+}
+
+exports.getAdminUser = async (req,res) =>{
+
 }

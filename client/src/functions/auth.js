@@ -39,7 +39,9 @@ export const currentAdmin = async (authToken) => {
                 authorization: authToken
             },
         }
-    );
+    ).then((res) =>{
+        console.log(res)
+    });
 };
 
 export const login = async (email, password) => {

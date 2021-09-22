@@ -68,7 +68,7 @@ const App = () => {
     //             _id: res.data._id,
     //           },
     //         });
-          // })
+    // })
     //       .catch((err) => console.log(err));
     //   }
     // });
@@ -81,8 +81,9 @@ const App = () => {
         // console.log("auth token")
         if (localStorage.token) {
             setAuthToken(localStorage.token);
-            getCurrentUser(localStorage.token).then((res,err) =>{
-                if (res.data){
+            getCurrentUser(localStorage.token).then((res, err) => {
+                if (res.data) {
+                    console.log(res.data)
                     dispatch({
                         type: "LOGGED_IN_USER",
                         payload: {
@@ -93,7 +94,7 @@ const App = () => {
                             _id: res.data._id,
                         },
                     });
-                }else{
+                } else {
                     console.log(err)
                 }
             })

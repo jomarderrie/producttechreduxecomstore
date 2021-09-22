@@ -46,6 +46,7 @@ const Login = ({history}) => {
         // console.table(email, password);
         try {
             await login(email, password).then((res) => {
+                console.log(res)
                 setAuthToken(res.data.userResp.token)
                 dispatch({
                     type: "LOGGED_IN_USER",

@@ -180,9 +180,17 @@ exports.addToWishlist = async (req, res) => {
 exports.wishlist = async (req, res) => {
   const list = await User.findOne({ email: req.user.email })
     .select("wishlist")
-    // .populate("wishlist")
     .exec();
-  console.log(list)
+  console.log(list.wishlist)
+  // const records = await Product.find().where('_id').in("5f3f75284dc5bd04c08d17fc").exec();
+  let toObject = list.wishlist.toObject();
+  let array = [];
+  let bokArr = [];
+  for (let i = 0; i < toObject.length; i++) {
+    array.push(toObject[i])
+    bokArr.push(await Product.findById(toObject[i]).exec())
+  }
+  console.log(array)
   console.log("hey")
   res.json(list);
 };

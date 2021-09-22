@@ -6,7 +6,7 @@ exports.orders = async (req, res) => {
     .sort("-createdAt")
     .populate("products.product")
     .exec();
-
+  console.log(allOrders)
   res.json(allOrders);
 };
 

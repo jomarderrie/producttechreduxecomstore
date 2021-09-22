@@ -8,9 +8,10 @@ import Orders from "../../components/order/Orders";
 const AdminDashboard = () => {
   const [orders, setOrders] = useState([]);
   const { user } = useSelector((state) => ({ ...state }));
-
+  const [loading,setLoading] = useState(true);
   useEffect(() => {
-    loadOrders();
+
+    loadOrders().then(() =>setLoading(false));
   }, []);
 
   const loadOrders = () =>
@@ -22,7 +23,7 @@ const AdminDashboard = () => {
   const handleStatusChange = (orderId, orderStatus) => {
     changeStatus(orderId, orderStatus, user.token).then((res) => {
       toast.success("Status updated");
-      loadOrders();
+      loadOrders().then(r => setOrders(r.data));
     });
   };
 

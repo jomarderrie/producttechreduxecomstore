@@ -18,6 +18,7 @@ const AdminDashboard = () => {
     getOrders(user.token).then((res) => {
       console.log(JSON.stringify(res.data, null, 4));
       setOrders(res.data);
+      console.log(res.data)
     });
 
   const handleStatusChange = (orderId, orderStatus) => {

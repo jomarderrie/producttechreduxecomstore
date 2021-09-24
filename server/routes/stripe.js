@@ -7,6 +7,6 @@ const { route } = require("./user");
 const { authCheck, authenticateTokenJwtUser} = require("../middlewares/auth");
 const {authenticateToken} = require("../controllers/auth");
 
-router.post("/create-payment-intent", authenticateTokenJwtUser, authenticateToken,createPaymentIntent);
+router.post("/create-payment-intent", authenticateTokenJwtUser,createPaymentIntent);
 
 module.exports = router;

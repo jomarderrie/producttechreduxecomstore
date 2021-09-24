@@ -6,7 +6,7 @@ const coupon = require("../models/coupon");
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 exports.createPaymentIntent = async (req, res) => {
-  // console.log(req.body);
+  console.log(req.body);
   const { couponApplied } = req.body;
 
   // later apply coupon
@@ -33,6 +33,7 @@ exports.createPaymentIntent = async (req, res) => {
     amount: finalAmount,
     currency: "usd",
   });
+  console.log(paymentIntent)
 
   res.send({
     clientSecret: paymentIntent.client_secret,

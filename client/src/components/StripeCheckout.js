@@ -26,8 +26,10 @@ const StripeCheckout = ({ history }) => {
   const elements = useElements();
 
   useEffect(() => {
+
     createPaymentIntent(user.token, coupon).then((res) => {
       console.log("create payment intent", res.data);
+      console.log(res.data.clientSecret)
       setClientSecret(res.data.clientSecret);
       // additional response received on successful payment
       setCartTotal(res.data.cartTotal);
@@ -39,7 +41,7 @@ const StripeCheckout = ({ history }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setProcessing(true);
-
+    console.log(clientSecret);
     const payload = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),

@@ -8,6 +8,7 @@ import {useDispatch} from "react-redux";
 import {currentUser, getCurrentUser} from "./functions/auth";
 import {LoadingOutlined} from "@ant-design/icons";
 import setAuthToken from "./utils/setAuthToken";
+import {getUserOrders} from "./functions/user";
 
 // using lazy
 const Login = lazy(() => import("./pages/auth/Login"));
@@ -76,6 +77,7 @@ const App = () => {
     // cleanup
     // return () => unsubscribe();
     // }, [dispatch]);
+
 
     useEffect(() => {
         // console.log("auth token")

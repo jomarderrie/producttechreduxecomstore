@@ -20,7 +20,7 @@ const ShowPaymentInfo = ({ order, showStatus = true }) => (
       <span>Payment: {order.paymentIntent.status.toUpperCase()}</span>
       {" / "}
       <span>
-        Orderd on:{" / "}
+        Ordered on:{" / "}
         {new Date(order.paymentIntent.created * 1000).toLocaleString()}
       </span>
       {" / "}

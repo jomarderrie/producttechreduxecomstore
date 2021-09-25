@@ -27,5 +27,10 @@ add coupon
 ![Imgur Image](https://i.imgur.com/mw0klNJ.png)
 
 ## user
+home page
+![Imgur Image](https://i.imgur.com/LE00nPS.png)
+products
+![image](https://user-images.githubusercontent.com/64851813/134775351-e36200fc-91fc-4b40-8169-303c11d79431.png)
+
 
 

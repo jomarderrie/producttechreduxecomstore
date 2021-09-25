@@ -31,6 +31,12 @@ home page
 ![Imgur Image](https://i.imgur.com/LE00nPS.png)
 products
 ![image](https://user-images.githubusercontent.com/64851813/134775351-e36200fc-91fc-4b40-8169-303c11d79431.png)
+Cart
+![image](https://user-images.githubusercontent.com/64851813/134775361-5fd95a66-a779-43cd-838c-4561f6d8f80c.png)
+user checkout
+![image](https://user-images.githubusercontent.com/64851813/134775808-c99708e0-1307-426b-a687-ab4dcbb6f16d.png)
+downloadable pdfs from checkouts
+![image](https://user-images.githubusercontent.com/64851813/134775836-e4e4c4ac-4a70-41cf-be92-4b6a8e4f84da.png)
 
 
 

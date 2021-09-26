@@ -3,7 +3,8 @@ const Cart = require("../models/cart");
 const Product = require("../models/product");
 const Coupon = require("../models/coupon");
 const coupon = require("../models/coupon");
-const stripe = require("stripe")(process.env.STRIPE_SECRET);
+const {STRIPE_SECRET} = require("../config/key");
+const stripe = require("stripe")(STRIPE_SECRET);
 
 exports.createPaymentIntent = async (req, res) => {
   console.log(req.body);

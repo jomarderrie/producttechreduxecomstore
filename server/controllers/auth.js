@@ -2,6 +2,7 @@ const User = require("../models/user");
 const jwt = require("express-jwt");
 const jsonwebtoken = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const {JWT_SECRET} = require("../config/key");
 
 exports.createOrUpdateUser = async (req, res) => {
     const {name, picture, email} = req.user;
@@ -70,7 +71,7 @@ exports.login = async (req, res) => {
             }
         };
         jsonwebtoken.sign(
-            payload, process.env.JWT_SECRET, {expiresIn: '5 days'}, (err, token) => {
+            payload, JWT_SECRET, {expiresIn: '5 days'}, (err, token) => {
                 if (err) throw err;
                 let userResp = {
                     name: user.name,
@@ -146,7 +147,7 @@ exports.createUser = async (req, res) => {
         console.log("USER CREATED", user);
 
         jsonwebtoken.sign(
-            payload, process.env.JWT_SECRET, {expiresIn: '5 days'}, (err, token) => {
+            payload, JWT_SECRET, {expiresIn: '5 days'}, (err, token) => {
                 if (err) throw err;
                 userResp = {
                     name: user.name,

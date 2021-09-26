@@ -26,7 +26,7 @@ exports.authenticateTokenJwtUser = (req,res,next) =>{
     return res.status(401).json({ error: 'Try to' +
           ' login again' });
   }
-  realJwt.verify(authHeader, process.env.JWT_SECRET, (err, user) => {
+  realJwt.verify(authHeader, JWT_SECRET, (err, user) => {
     if (err) {
       return res.status(401).json({ error: 'Invalid' +
             ' json token' });

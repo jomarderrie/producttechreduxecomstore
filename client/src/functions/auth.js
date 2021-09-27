@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const createOrUpdateUser = async (authToken) => {
     return await axios.post(
-        `${process.env.REACT_APP_API}/create-or-update-user`,
+        `http://localhost:8000/api/create-or-update-user`,
         {},
         {
             headers: {
@@ -14,7 +14,7 @@ export const createOrUpdateUser = async (authToken) => {
 
 export const currentUser = async (authToken) => {
     return await axios.post(
-        `${process.env.REACT_APP_API}/current-user`,
+        `http://localhost:8000/api/current-user`,
         {},
         {
             headers:{
@@ -25,14 +25,14 @@ export const currentUser = async (authToken) => {
 };
 export const createUser = async (email, password) => {
     return await axios.post(
-        `${process.env.REACT_APP_API}/create-user`,
+        `http://localhost:8000/api/create-user`,
         {email, password},
     )
 }
 
 export const currentAdmin = async (authToken) => {
     return await axios.post(
-        `${process.env.REACT_APP_API}/current-admin`,
+        `http://localhost:8000/api/current-admin`,
         {},
         {
             headers:{
@@ -45,11 +45,11 @@ export const currentAdmin = async (authToken) => {
 };
 
 export const login = async (email, password) => {
-    return await axios.post(`${process.env.REACT_APP_API}/login`, {email, password})
+    return await axios.post(`http://localhost:8000/api/login`, {email, password})
 }
 
 export const getCurrentUser = async (authToken) => {
-    return await axios.post(`${process.env.REACT_APP_API}/jwt-user`,
+    return await axios.post(`http://localhost:8000/api/jwt-user`,
         {}, {
         headers:{
             authorization: authToken
@@ -58,7 +58,7 @@ export const getCurrentUser = async (authToken) => {
 }
 
 export const updatePassword = async (authToken, password) =>{
-    return await axios.post(`${process.env.REACT_APP_API}/update-password`,
+    return await axios.post(`http://localhost:8000/api/update-password`,
         {password}, {
             headers:{
                 authorization: authToken

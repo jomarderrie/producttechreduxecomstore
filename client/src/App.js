@@ -80,6 +80,7 @@ const App = () => {
 
 
     useEffect(() => {
+        console.log(process.env.REACT_APP_API, "process")
         // console.log("auth token")
         if (localStorage.token) {
             setAuthToken(localStorage.token);

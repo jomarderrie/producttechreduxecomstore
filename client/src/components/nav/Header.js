@@ -32,7 +32,8 @@ const Header = () => {
     };
 
     const logout = () => {
-        firebase.auth().signOut();
+        localStorage.removeItem('token');
+        localStorage.removeItem('cart');
         dispatch({
             type: "LOGOUT",
             payload: null,

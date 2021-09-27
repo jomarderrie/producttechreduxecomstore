@@ -1,47 +1,67 @@
 import axios from "axios";
 
-export const createOrUpdateUser = async (authtoken) => {
-  return await axios.post(
-    `${process.env.REACT_APP_API}/create-or-update-user`,
-    {},
-    {
-      headers: {
-        authtoken,
-      },
-    }
-  );
+export const createOrUpdateUser = async (authToken) => {
+    return await axios.post(
+        `http://localhost:8000/api/create-or-update-user`,
+        {},
+        {
+            headers: {
+                authorization: authToken,
+            }
+        }
+    );
 };
 
-export const currentUser = async (authtoken) => {
-  return await axios.post(
-    `${process.env.REACT_APP_API}/current-user`,
-    {},
-    {
-      headers: {
-        authtoken,
-      },
-    }
-  );
-};
-export const createUser = async(email, password) =>{
+export const currentUser = async (authToken) => {
     return await axios.post(
-        `${process.env.REACT_APP_API}/create-user`,
+        `http://localhost:8000/api/current-user`,
+        {},
+        {
+            headers:{
+                authorization: authToken
+            }
+        }
+    );
+};
+export const createUser = async (email, password) => {
+    return await axios.post(
+        `http://localhost:8000/api/create-user`,
         {email, password},
     )
 }
 
-export const currentAdmin = async (authtoken) => {
-  return await axios.post(
-    `${process.env.REACT_APP_API}/current-admin`,
-    {},
-    {
-      headers: {
-        authtoken,
-      },
-    }
-  );
+export const currentAdmin = async (authToken) => {
+    return await axios.post(
+        `http://localhost:8000/api/current-admin`,
+        {},
+        {
+            headers:{
+                authorization: authToken
+            },
+        }
+    ).then((res) =>{
+        console.log(res)
+    });
 };
 
-export const login = async (email, password) =>{
-    return await axios.post(`${process.env.REACT_APP_API}/login`,{email,password})
+export const login = async (email, password) => {
+    return await axios.post(`http://localhost:8000/api/login`, {email, password})
+}
+
+export const getCurrentUser = async (authToken) => {
+    return await axios.post(`http://localhost:8000/api/jwt-user`,
+        {}, {
+        headers:{
+            authorization: authToken
+            }
+    })
+}
+
+export const updatePassword = async (authToken, password) =>{
+    return await axios.post(`http://localhost:8000/api/update-password`,
+        {password}, {
+            headers:{
+                authorization: authToken
+            }
+        })
 }

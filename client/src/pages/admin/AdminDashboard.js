@@ -8,21 +8,23 @@ import Orders from "../../components/order/Orders";
 const AdminDashboard = () => {
   const [orders, setOrders] = useState([]);
   const { user } = useSelector((state) => ({ ...state }));
-
+  const [loading,setLoading] = useState(true);
   useEffect(() => {
-    loadOrders();
+
+    loadOrders().then(() =>setLoading(false));
   }, []);
 
   const loadOrders = () =>
     getOrders(user.token).then((res) => {
       console.log(JSON.stringify(res.data, null, 4));
       setOrders(res.data);
+      console.log(res.data)
     });
 
   const handleStatusChange = (orderId, orderStatus) => {
     changeStatus(orderId, orderStatus, user.token).then((res) => {
       toast.success("Status updated");
-      loadOrders();
+      loadOrders().then(r => setOrders(r.data));
     });
   };
 

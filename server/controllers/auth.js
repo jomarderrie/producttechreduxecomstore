@@ -2,6 +2,7 @@ const User = require("../models/user");
 const jwt = require("express-jwt");
 const jsonwebtoken = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const {JWT_SECRET} = require("../config/key");
 
 exports.createOrUpdateUser = async (req, res) => {
     const {name, picture, email} = req.user;
@@ -23,6 +24,7 @@ exports.createOrUpdateUser = async (req, res) => {
 
 
 exports.currentUser = async (req, res) => {
+    console.log(req)
     User.findOne({email: req.user.email}).exec((err, user) => {
         if (err) throw new Error(err);
         res.json(user);
@@ -30,6 +32,8 @@ exports.currentUser = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
+    console.log(req.body)
+
     let emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
     let errors = []
     let password = req.body.password;
@@ -67,7 +71,7 @@ exports.login = async (req, res) => {
             }
         };
         jsonwebtoken.sign(
-            payload, process.env.JWT_SECRET, {expiresIn: '5 days'}, (err, token) => {
+            payload, JWT_SECRET, {expiresIn: '5 days'}, (err, token) => {
                 if (err) throw err;
                 let userResp = {
                     name: user.name,
@@ -76,6 +80,7 @@ exports.login = async (req, res) => {
                     role: user.role,
                     _id: user._id,
                 };
+                console.log(userResp)
                 res.json({userResp});
             }
         )
@@ -85,6 +90,20 @@ exports.login = async (req, res) => {
     }
 }
 
+exports.authenticateToken = async (req, res) => {
+    let userResp;
+    User.findOne({email: req.user.email}).exec((err, user) => {
+        if (err) throw new Error(err);
+        userResp = {
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            _id: user._id,
+
+        };
+        res.json(userResp);
+    })
+}
 
 exports.createUser = async (req, res) => {
     let emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
@@ -102,7 +121,7 @@ exports.createUser = async (req, res) => {
         return res.status(400).json({errors: errors});
     }
     try {
-        let user = await User.findOne({email});
+        let user = await User.findOne({email:email});
         if (user) {
             return res
                 .status(400)
@@ -128,7 +147,7 @@ exports.createUser = async (req, res) => {
         console.log("USER CREATED", user);
 
         jsonwebtoken.sign(
-            payload, process.env.JWT_SECRET, {expiresIn: '5 days'}, (err, token) => {
+            payload, JWT_SECRET, {expiresIn: '5 days'}, (err, token) => {
                 if (err) throw err;
                 userResp = {
                     name: user.name,
@@ -137,6 +156,7 @@ exports.createUser = async (req, res) => {
                     role: user.role,
                     _id: user._id,
                 };
+                console.log(userResp)
                 res.json({userResp});
             }
         )
@@ -146,4 +166,29 @@ exports.createUser = async (req, res) => {
         console.error(err.message);
         res.status(500).send('Server error');
     }
+}
+
+exports.updatePassword = async (req, res) => {
+    let email = req.user.email;
+    const salt = await bcrypt.genSalt(10);
+
+   let password = await bcrypt.hash(req.body.password, salt);
+
+    const user = await User.findOneAndUpdate(
+        {email:email},
+        {password: password},
+        {new: true}
+    );
+    if (user) {
+        console.log("USER UPDATED", user);
+        res.json(user);
+    } else {
+        console.error(err.message);
+        res.status(500).send('Server error');
+
+    }
+}
+
+exports.getAdminUser = async (req,res) =>{
+
 }

@@ -122,22 +122,22 @@ const ProductUpdateForm = ({
         </select>
       </div>
 
-      <div className="form-group">
-        <label>Category</label>
-        <select
-          name="category"
-          className="form-control"
-          onChange={handleCategoryChange}
-          value={selectedCategory ? selectedCategory : category._id}
-        >
-          {categories.length > 0 &&
-            categories.map((c) => (
-              <option key={c._id} value={c._id}>
-                {c.name}
-              </option>
-            ))}
-        </select>
-      </div>
+      {/*<div className="form-group">*/}
+      {/*  <label>Category</label>*/}
+      {/*  <select*/}
+      {/*    name="category"*/}
+      {/*    className="form-control"*/}
+      {/*    onChange={handleCategoryChange}*/}
+      {/*    value={selectedCategory ? selectedCategory : category._id}*/}
+      {/*  >*/}
+      {/*    {categories.length > 0 &&*/}
+      {/*      categories.map((c) => (*/}
+      {/*        <option key={c._id} value={c._id}>*/}
+      {/*          {c.name}*/}
+      {/*        </option>*/}
+      {/*      ))}*/}
+      {/*  </select>*/}
+      {/*</div>*/}
 
       <div>
         <label>Sub Categories</label>

@@ -29,9 +29,11 @@ const Product = ({ match }) => {
 
   const loadSingleProduct = () => {
     getProduct(slug).then((res) => {
+      console.log(res.data)
       setProduct(res.data);
       // load related
-      getRelated(res.data._id).then((res) => setRelated(res.data));
+      console.log(res.data.slug)
+      getRelated(res.data.title).then((res) => setRelated(res.data));
     });
   };
 

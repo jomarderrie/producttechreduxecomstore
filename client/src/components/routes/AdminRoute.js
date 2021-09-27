@@ -9,6 +9,7 @@ const AdminRoute = ({ children, ...rest }) => {
   const [ok, setOk] = useState(false);
 
   useEffect(() => {
+    console.log(ok)
     if (user && user.token) {
       currentAdmin(user.token)
         .then((res) => {

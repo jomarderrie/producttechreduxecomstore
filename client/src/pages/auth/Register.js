@@ -16,12 +16,13 @@ const Register = ({history}) => {
         if (user && user.token) history.push("/");
     }, [user, history]);
     let dispatch = useDispatch();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         try {
              await createUser(email, password).then((res) => {
-                // localStorage.setItem("JWT", JSON.stringify(res.data.token));
+                localStorage.setItem("token", (res.data.userResp.token));
                 console.log(res)
                 dispatch({
                     type: "LOGGED_IN_USER",

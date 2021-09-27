@@ -1,110 +1,110 @@
 import axios from "axios";
 
-export const userCart = async (cart, authtoken) =>
-  await axios.post(
-    `${process.env.REACT_APP_API}/user/cart`,
-    { cart },
-    {
-      headers: {
-        authtoken,
-      },
-    }
-  );
+export const userCart = async (cart, authToken) =>
+    await axios.post(
+        `http://localhost:8000/api/user/cart`,
+        {cart},
+        {
+            headers: {
+                authorization: authToken,
+            },
+        }
+    );
 
-export const getUserCart = async (authtoken) =>
-  await axios.get(`${process.env.REACT_APP_API}/user/cart`, {
-    headers: {
-      authtoken,
-    },
-  });
+export const getUserCart = async (authToken) =>
+    await axios.get(`http://localhost:8000/api/user/cart`, {
+        headers: {
+            authorization: authToken,
+        },
+    });
 
-export const emptyUserCart = async (authtoken) =>
-  await axios.delete(`${process.env.REACT_APP_API}/user/cart`, {
-    headers: {
-      authtoken,
-    },
-  });
+export const emptyUserCart = async (authToken) =>
+    await axios.delete(`http://localhost:8000/api/user/cart`, {
+        headers: {
+            authorization: authToken,
+        },
+    });
 
-export const saveUserAddress = async (authtoken, address) =>
-  await axios.post(
-    `${process.env.REACT_APP_API}/user/address`,
-    { address },
-    {
-      headers: {
-        authtoken,
-      },
-    }
-  );
+export const saveUserAddress = async (authToken, address) =>
+    await axios.post(
+        `http://localhost:8000/api/user/address`,
+        {address},
+        {
+            headers: {
+                authorization: authToken,
+            },
+        }
+    );
 
-export const applyCoupon = async (authtoken, coupon) =>
-  await axios.post(
-    `${process.env.REACT_APP_API}/user/cart/coupon`,
-    { coupon },
-    {
-      headers: {
-        authtoken,
-      },
-    }
-  );
+export const applyCoupon = async (authToken, coupon) =>
+    await axios.post(
+        `http://localhost:8000/api/user/cart/coupon`,
+        {coupon},
+        {
+            headers: {
+                authorization: authToken,
+            },
+        }
+    );
 
-export const createOrder = async (stripeResponse, authtoken) =>
-  await axios.post(
-    `${process.env.REACT_APP_API}/user/order`,
-    { stripeResponse },
-    {
-      headers: {
-        authtoken,
-      },
-    }
-  );
+export const createOrder = async (stripeResponse, authToken) =>
+    await axios.post(
+        `http://localhost:8000/api/user/order`,
+        {stripeResponse},
+        {
+            headers: {
+                authorization: authToken,
+            },
+        }
+    );
 
-export const getUserOrders = async (authtoken) =>
-  await axios.get(`${process.env.REACT_APP_API}/user/orders`, {
-    headers: {
-      authtoken,
-    },
-  });
+export const getUserOrders = async (authToken) =>
+    await axios.get(`http://localhost:8000/api/user/orders`, {
+        headers: {
+            authorization: authToken,
+        },
+    });
 
-export const getWishlist = async (authtoken) =>
-  await axios.get(`${process.env.REACT_APP_API}/user/wishlist`, {
-    headers: {
-      authtoken,
-    },
-  });
+export const getWishlist = async (authToken) =>
+    await axios.get(`http://localhost:8000/api/user/wishlist`, {
+        headers: {
+            authorization: authToken,
+        },
+    });
 
-export const removeWishlist = async (productId, authtoken) =>
-  await axios.put(
-    `${process.env.REACT_APP_API}/user/wishlist/${productId}`,
-    {},
-    {
-      headers: {
-        authtoken,
-      },
-    }
-  );
+export const removeWishlist = async (productId, authToken) =>
+    await axios.put(
+        `http://localhost:8000/api/user/wishlist/${productId}`,
+        {},
+        {
+            headers: {
+                authorization: authToken,
+            },
+        }
+    );
 
-export const addToWishlist = async (productId, authtoken) =>
-  await axios.post(
-    `${process.env.REACT_APP_API}/user/wishlist`,
-    { productId },
-    {
-      headers: {
-        authtoken,
-      },
-    }
-  );
+export const addToWishlist = async (productId, authToken) =>
+    await axios.post(
+        `http://localhost:8000/api/user/wishlist`,
+        {productId},
+        {
+            headers: {
+                authorization: authToken,
+            },
+        }
+    );
 
 export const createCashOrderForUser = async (
-  authtoken,
-  COD,
-  couponTrueOrFalse
+    authToken,
+    COD,
+    couponTrueOrFalse
 ) =>
-  await axios.post(
-    `${process.env.REACT_APP_API}/user/cash-order`,
-    { couponApplied: couponTrueOrFalse, COD },
-    {
-      headers: {
-        authtoken,
-      },
-    }
-  );
+    await axios.post(
+        `http://localhost:8000/api/user/cash-order`,
+        {couponApplied: couponTrueOrFalse, COD},
+        {
+            headers: {
+                authorization: authToken,
+            },
+        }
+    );

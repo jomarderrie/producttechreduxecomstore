@@ -1,11 +1,11 @@
 # producttechreduxecomstore
-
+website link: 54.242.154.219
 ## technologystack
-Database: mongo
-frontend: react
-client side storage: redux
-backend: node
-
+- Database: mongo
+- frontend: react
+- client side storage: redux
+- backend: node
+- aws
 ## features
 - jwt login
 - admin dashboard

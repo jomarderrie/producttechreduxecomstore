@@ -1,5 +1,5 @@
 # producttechreduxecomstore
-website link: 54.242.154.219
+website link(no domain just ip): 54.242.154.219
 ## technologystack
 - Database: mongo
 - frontend: react
